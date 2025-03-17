@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { useToast } from "@/components/ui/use-toast";
 import { 
   Select,
   SelectContent,
@@ -18,11 +19,24 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle register logic here (kept intact for backend connection)
+    // For now, simulate successful registration with any data
     console.log('Register attempt with:', { name, email, username, role, password });
+    
+    // Show success toast
+    toast({
+      title: "Successfully registered",
+      description: "Your account has been created. You can now sign in.",
+      variant: "default",
+    });
+    
+    // Navigate to the dashboard directly after registration
+    // In a real app, you might want to navigate to sign-in page instead
+    navigate('/dashboard');
   };
 
   return (

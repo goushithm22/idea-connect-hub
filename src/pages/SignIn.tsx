@@ -1,18 +1,31 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { useToast } from "@/components/ui/use-toast";
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here (kept intact for backend connection)
+    // For now, simulate successful login with any credentials
     console.log('Login attempt with:', { username, password });
+    
+    // Show success toast
+    toast({
+      title: "Successfully signed in",
+      description: "You have been logged in successfully.",
+      variant: "default",
+    });
+    
+    // Navigate to the dashboard after login
+    navigate('/dashboard');
   };
 
   return (
