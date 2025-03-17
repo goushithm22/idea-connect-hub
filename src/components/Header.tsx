@@ -1,10 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  
+  // Don't show header on dashboard pages
+  if (location.pathname.startsWith('/dashboard')) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
