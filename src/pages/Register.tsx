@@ -30,13 +30,16 @@ const Register = () => {
     // Show success toast
     toast({
       title: "Successfully registered",
-      description: "Your account has been created. You can now sign in.",
+      description: "Your account has been created. You can now log in.",
       variant: "default",
     });
     
     // Navigate to the dashboard directly after registration
-    // In a real app, you might want to navigate to sign-in page instead
-    navigate('/dashboard');
+    // Adding a small delay to ensure the toast is visible
+    setTimeout(() => {
+      navigate('/dashboard');
+      console.log('Navigating to dashboard...');
+    }, 500);
   };
 
   return (

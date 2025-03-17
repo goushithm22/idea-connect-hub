@@ -25,7 +25,11 @@ const SignIn = () => {
     });
     
     // Navigate to the dashboard after login
-    navigate('/dashboard');
+    // Adding a small delay to ensure the toast is visible
+    setTimeout(() => {
+      navigate('/dashboard');
+      console.log('Navigating to dashboard...');
+    }, 500);
   };
 
   return (
