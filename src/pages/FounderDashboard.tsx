@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 
 // Mock data for startups
 const mockStartups = [
@@ -14,21 +15,24 @@ const mockStartups = [
     name: "TechInnovate",
     description: "AI-powered solution for small businesses",
     fundingGoal: 500000,
-    currentFunding: 125000
+    currentFunding: 125000,
+    sector: "Tech"
   },
   {
     id: 2,
     name: "GreenEnergy",
     description: "Sustainable energy solutions for residential buildings",
     fundingGoal: 750000,
-    currentFunding: 300000
+    currentFunding: 300000,
+    sector: "Energy"
   },
   {
     id: 3,
     name: "HealthTrack",
     description: "Medical monitoring devices for remote patient care",
     fundingGoal: 1000000,
-    currentFunding: 450000
+    currentFunding: 450000,
+    sector: "Healthcare"
   }
 ];
 
@@ -36,14 +40,33 @@ const FounderDashboard = () => {
   const [selectedStartup, setSelectedStartup] = useState<number | null>(null);
   const [isCompanyFormOpen, setIsCompanyFormOpen] = useState(false);
   const userName = "Founder"; // This would come from authentication context
+  const { toast } = useToast();
 
   const handleShowDetails = (id: number) => {
     setSelectedStartup(id);
+    toast({
+      title: "Startup Details",
+      description: `Viewing details for startup ID: ${id}`,
+      variant: "default",
+    });
   };
 
   const handleConnect = () => {
-    console.log("Connect button clicked");
-    // Handle connection logic here
+    toast({
+      title: "Connection Request",
+      description: "Your connection request has been sent.",
+      variant: "default",
+    });
+  };
+
+  const handleSubmitCompany = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsCompanyFormOpen(false);
+    toast({
+      title: "Company Listed",
+      description: "Your company has been successfully listed.",
+      variant: "default",
+    });
   };
 
   return (
@@ -64,6 +87,7 @@ const FounderDashboard = () => {
             <CardContent className="p-6">
               <h2 className="text-xl font-bold mb-2">{startup.name}</h2>
               <p className="text-gray-300 mb-4">{startup.description}</p>
+              <p><strong>Sector:</strong> {startup.sector}</p>
               <p><strong>Funding Goal:</strong> ${startup.fundingGoal.toLocaleString()}</p>
               <p className="mb-4"><strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()}</p>
               <div className="flex gap-2">
@@ -92,7 +116,7 @@ const FounderDashboard = () => {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">List Your Company</DialogTitle>
           </DialogHeader>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-4" onSubmit={handleSubmitCompany}>
             <div className="space-y-2">
               <Label htmlFor="company-name">Company Name</Label>
               <Input id="company-name" className="bg-gray-700 border-gray-600" />
@@ -132,7 +156,7 @@ const FounderDashboard = () => {
               <DialogClose asChild>
                 <Button variant="outline" className="border-gray-600">Cancel</Button>
               </DialogClose>
-              <Button className="bg-idea hover:bg-idea-dark">List Company</Button>
+              <Button type="submit" className="bg-idea hover:bg-idea-dark">List Company</Button>
             </div>
           </form>
         </DialogContent>

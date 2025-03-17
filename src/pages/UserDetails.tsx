@@ -7,11 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 // Mock data for user
 const mockUser = {
   name: "John Doe",
-  email: "john.doe@example.com"
+  email: "john.doe@example.com",
+  username: "johndoe"
 };
 
 // Mock data for startups
@@ -34,6 +36,17 @@ const mockUserStartups = [
 
 const UserDetails = () => {
   const [isCompanyFormOpen, setIsCompanyFormOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmitCompany = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsCompanyFormOpen(false);
+    toast({
+      title: "Company Listed",
+      description: "Your company has been successfully listed.",
+      variant: "default",
+    });
+  };
 
   return (
     <div>
@@ -44,6 +57,7 @@ const UserDetails = () => {
         <CardContent className="space-y-2">
           <p><strong>Name:</strong> {mockUser.name}</p>
           <p><strong>Email:</strong> {mockUser.email}</p>
+          <p><strong>Username:</strong> {mockUser.username}</p>
           <Button 
             className="mt-4 bg-idea hover:bg-idea-dark"
             onClick={() => setIsCompanyFormOpen(true)}
@@ -78,7 +92,7 @@ const UserDetails = () => {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">List Your Company</DialogTitle>
           </DialogHeader>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-4" onSubmit={handleSubmitCompany}>
             <div className="space-y-2">
               <Label htmlFor="company-name">Company Name</Label>
               <Input id="company-name" className="bg-gray-700 border-gray-600" />
@@ -94,6 +108,8 @@ const UserDetails = () => {
                   <SelectItem value="tech">Tech</SelectItem>
                   <SelectItem value="healthcare">Healthcare</SelectItem>
                   <SelectItem value="finance">Finance</SelectItem>
+                  <SelectItem value="energy">Energy</SelectItem>
+                  <SelectItem value="education">Education</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -112,7 +128,7 @@ const UserDetails = () => {
               <DialogClose asChild>
                 <Button variant="outline" className="border-gray-600">Cancel</Button>
               </DialogClose>
-              <Button className="bg-idea hover:bg-idea-dark">List Company</Button>
+              <Button type="submit" className="bg-idea hover:bg-idea-dark">List Company</Button>
             </div>
           </form>
         </DialogContent>

@@ -1,12 +1,25 @@
 
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Home, User, LogOut } from 'lucide-react';
+import { useToast } from "@/components/ui/use-toast";
 
 const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    // In a real app, this would clear auth state
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+      variant: "default",
+    });
+    navigate('/signin');
+  };
 
   return (
     <div className="flex h-screen bg-black text-white">
@@ -37,14 +50,17 @@ const DashboardLayout = () => {
                 <User size={20} />
                 <span>User</span>
               </Link>
-              <Link 
-                to="/signin" 
-                className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
-                onClick={() => setOpen(false)}
+              <Button 
+                variant="ghost" 
+                className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                onClick={() => {
+                  setOpen(false);
+                  handleLogout();
+                }}
               >
                 <LogOut size={20} />
                 <span>Logout</span>
-              </Link>
+              </Button>
             </nav>
           </div>
         </SheetContent>
@@ -68,13 +84,14 @@ const DashboardLayout = () => {
             <User size={20} />
             <span>User</span>
           </Link>
-          <Link 
-            to="/signin" 
-            className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+          <Button 
+            variant="ghost" 
+            className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+            onClick={handleLogout}
           >
             <LogOut size={20} />
             <span>Logout</span>
-          </Link>
+          </Button>
         </nav>
       </aside>
 
