@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useLocation } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -23,7 +22,6 @@ const Register = () => {
   const location = useLocation();
   const { toast } = useToast();
   
-  // Set default role if specified in location state
   useEffect(() => {
     if (location.state?.role) {
       setRole(location.state.role);
@@ -32,18 +30,14 @@ const Register = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, simulate successful registration with any data
     console.log('Register attempt with:', { name, email, username, role, password });
     
-    // Show success toast
     toast({
       title: "Successfully registered",
       description: "Your account has been created. You can now log in.",
       variant: "default",
     });
     
-    // Navigate to the dashboard directly after registration
-    // Adding a small delay to ensure the toast is visible
     setTimeout(() => {
       navigate('/dashboard');
       console.log('Navigating to dashboard...');
