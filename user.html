@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details - IdeaSync</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <!-- Sidebar for desktop -->
+    <aside class="sidebar">
+      <h2 class="sidebar-logo">ideaSync</h2>
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="sidebar-link">
+          <i class="icon-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="user.html" class="sidebar-link active">
+          <i class="icon-user"></i>
+          <span>User</span>
+        </a>
+        <button id="logout-btn" class="sidebar-link sidebar-button">
+          <i class="icon-logout"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dashboard-main">
+      <div class="content-container">
+        <!-- User details card -->
+        <div class="details-card">
+          <div class="card-header">
+            <h2 class="card-title">User Details</h2>
+          </div>
+          <div class="card-content">
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Username:</strong> johndoe</p>
+            <button id="list-company-btn" class="btn btn-primary">List a Company</button>
+          </div>
+        </div>
+
+        <!-- Listed companies card -->
+        <div class="details-card">
+          <div class="card-header">
+            <h2 class="card-title">Existing Listed Companies</h2>
+          </div>
+          <div class="card-content">
+            <ul class="company-list">
+              <li class="company-item">
+                <strong>TechInnovate</strong> - AI-powered solution for small businesses
+                <br>
+                <span class="company-meta">
+                  (Funding Goal: $500,000, Sector: Tech)
+                </span>
+              </li>
+              <li class="company-item">
+                <strong>GreenEnergy</strong> - Sustainable energy solutions for residential buildings
+                <br>
+                <span class="company-meta">
+                  (Funding Goal: $750,000, Sector: Energy)
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Company Listing Modal -->
+  <div id="company-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">List Your Company</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="company-form" class="modal-form">
+        <div class="form-group">
+          <label for="company-name">Company Name</label>
+          <input id="company-name" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="sector">Sector</label>
+          <select id="sector" required>
+            <option value="" disabled selected>Select Sector</option>
+            <option value="tech">Tech</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="finance">Finance</option>
+            <option value="energy">Energy</option>
+            <option value="education">Education</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="funding-goal">Funding Goal ($)</label>
+          <input id="funding-goal" type="number" required />
+        </div>
+
+        <div class="form-group">
+          <label for="founder-details">Founder Details</label>
+          <textarea id="founder-details" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">List Company</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast">
+    <div class="toast-content">
+      <p class="toast-title">Success</p>
+      <p class="toast-message">Operation completed successfully.</p>
+    </div>
+  </div>
+
+  <script>
+    // Modal functionality
+    const modal = document.getElementById('company-modal');
+    const openModalBtn = document.getElementById('list-company-btn');
+    const closeModalBtn = document.querySelector('.modal-close');
+    const cancelBtn = document.querySelector('.cancel-btn');
+    const toast = document.getElementById('toast');
+    
+    // Open modal
+    openModalBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+    
+    // Close modal
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+    
+    // Close modal with cancel button
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+      }
+    });
+    
+    // Company form submission
+    document.getElementById('company-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      modal.classList.remove('show');
+      
+      // Show toast
+      document.querySelector('.toast-title').textContent = 'Company Listed';
+      document.querySelector('.toast-message').textContent = 'Your company has been successfully listed.';
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    });
+    
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      document.querySelector('.toast-title').textContent = 'Logged out';
+      document.querySelector('.toast-message').textContent = 'You have been successfully logged out.';
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        window.location.href = 'signin.html';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

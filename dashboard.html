@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - IdeaSync</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-icons/dist/umd/lucide.min.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <!-- Sidebar for desktop -->
+    <aside class="sidebar">
+      <h2 class="sidebar-logo">ideaSync</h2>
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="sidebar-link active">
+          <i class="icon-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="user.html" class="sidebar-link">
+          <i class="icon-user"></i>
+          <span>User</span>
+        </a>
+        <button id="logout-btn" class="sidebar-link sidebar-button">
+          <i class="icon-logout"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dashboard-main">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Welcome, Founder!</h1>
+        <button id="list-company-btn" class="btn btn-primary">List a Company</button>
+      </div>
+
+      <section class="startup-grid">
+        <!-- Startup Card 1 -->
+        <div class="startup-card">
+          <h2 class="startup-name">TechInnovate</h2>
+          <p class="startup-desc">AI-powered solution for small businesses</p>
+          <p class="startup-info"><strong>Sector:</strong> Tech</p>
+          <p class="startup-info"><strong>Funding Goal:</strong> $500,000</p>
+          <p class="startup-info"><strong>Current Funding:</strong> $125,000</p>
+          <div class="startup-actions">
+            <button class="btn btn-primary btn-small details-btn">More Details</button>
+            <button class="btn btn-outline btn-small connect-btn">Connect</button>
+          </div>
+        </div>
+
+        <!-- Startup Card 2 -->
+        <div class="startup-card">
+          <h2 class="startup-name">GreenEnergy</h2>
+          <p class="startup-desc">Sustainable energy solutions for residential buildings</p>
+          <p class="startup-info"><strong>Sector:</strong> Energy</p>
+          <p class="startup-info"><strong>Funding Goal:</strong> $750,000</p>
+          <p class="startup-info"><strong>Current Funding:</strong> $300,000</p>
+          <div class="startup-actions">
+            <button class="btn btn-primary btn-small details-btn">More Details</button>
+            <button class="btn btn-outline btn-small connect-btn">Connect</button>
+          </div>
+        </div>
+
+        <!-- Startup Card 3 -->
+        <div class="startup-card">
+          <h2 class="startup-name">HealthTrack</h2>
+          <p class="startup-desc">Medical monitoring devices for remote patient care</p>
+          <p class="startup-info"><strong>Sector:</strong> Healthcare</p>
+          <p class="startup-info"><strong>Funding Goal:</strong> $1,000,000</p>
+          <p class="startup-info"><strong>Current Funding:</strong> $450,000</p>
+          <div class="startup-actions">
+            <button class="btn btn-primary btn-small details-btn">More Details</button>
+            <button class="btn btn-outline btn-small connect-btn">Connect</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Company Listing Modal -->
+  <div id="company-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">List Your Company</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="company-form" class="modal-form">
+        <div class="form-group">
+          <label for="company-name">Company Name</label>
+          <input id="company-name" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="company-description">Description</label>
+          <textarea id="company-description" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="company-sector">Sector</label>
+          <input id="company-sector" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="funding-required">Funding Required ($)</label>
+          <input id="funding-required" type="number" required />
+        </div>
+
+        <div class="form-group">
+          <label for="founder-details">Founder Details</label>
+          <textarea id="founder-details" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">List Company</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast">
+    <div class="toast-content">
+      <p class="toast-title">Success</p>
+      <p class="toast-message">Operation completed successfully.</p>
+    </div>
+  </div>
+
+  <script>
+    // Modal functionality
+    const modal = document.getElementById('company-modal');
+    const openModalBtn = document.getElementById('list-company-btn');
+    const closeModalBtn = document.querySelector('.modal-close');
+    const cancelBtn = document.querySelector('.cancel-btn');
+    const toast = document.getElementById('toast');
+    
+    // Open modal
+    openModalBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+    
+    // Close modal
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+    
+    // Close modal with cancel button
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+      }
+    });
+    
+    // Company form submission
+    document.getElementById('company-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      modal.classList.remove('show');
+      
+      // Show toast
+      document.querySelector('.toast-title').textContent = 'Company Listed';
+      document.querySelector('.toast-message').textContent = 'Your company has been successfully listed.';
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    });
+    
+    // Connect button functionality
+    const connectBtns = document.querySelectorAll('.connect-btn');
+    connectBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.toast-title').textContent = 'Connection Request';
+        document.querySelector('.toast-message').textContent = 'Your connection request has been sent.';
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      });
+    });
+    
+    // Details button functionality
+    const detailsBtns = document.querySelectorAll('.details-btn');
+    detailsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.toast-title').textContent = 'Startup Details';
+        document.querySelector('.toast-message').textContent = 'Viewing details for this startup.';
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      });
+    });
+    
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      document.querySelector('.toast-title').textContent = 'Logged out';
+      document.querySelector('.toast-message').textContent = 'You have been successfully logged out.';
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        window.location.href = 'signin.html';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

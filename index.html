@@ -1,18 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>idea-connect-hub</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-    <meta property="og:image" content="/og-image.png" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IdeaSync - Connecting Ideas with Capital</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+  <header id="main-header">
+    <div class="container">
+      <div class="logo">
+        <a href="index.html">idea<span class="bold">sync</span></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="signin.html">Sign in</a></li>
+          <li><a href="register.html" class="btn-register">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <main>
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="badge">CONNECTING IDEAS WITH CAPITAL</span>
+        <h1 class="hero-title">idea<span class="bold">sync</span></h1>
+        <p class="hero-desc">Where visionary founders and strategic investors connect.</p>
+        <p class="hero-subdesc">The platform that transforms great ideas into funded realities.</p>
+        <div class="cta-buttons">
+          <a href="register.html?role=Founder" class="btn btn-primary">For Founders</a>
+          <a href="register.html?role=Investor" class="btn btn-secondary">For Investors</a>
+        </div>
+      </div>
+      
+      <div class="hero-animation">
+        <div class="animation-container">
+          <!-- Main circle -->
+          <div class="main-circle"></div>
+          
+          <!-- Center IS logo -->
+          <div class="center-logo">
+            <div class="center-logo-inner">
+              <span>IS</span>
+            </div>
+          </div>
+          
+          <!-- Icons in circle -->
+          <div class="icon-circle icon-user" style="animation-delay: 0s;">
+            <div class="icon-bg">
+              <i class="icon-user-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-trending" style="animation-delay: 0.5s;">
+            <div class="icon-bg">
+              <i class="icon-trending-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-briefcase" style="animation-delay: 1s;">
+            <div class="icon-bg">
+              <i class="icon-briefcase-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-rocket" style="animation-delay: 1.5s;">
+            <div class="icon-bg">
+              <i class="icon-rocket-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-users" style="animation-delay: 2s;">
+            <div class="icon-bg">
+              <i class="icon-users-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-target" style="animation-delay: 2.5s;">
+            <div class="icon-bg">
+              <i class="icon-target-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-dollar" style="animation-delay: 3s;">
+            <div class="icon-bg">
+              <i class="icon-dollar-svg"></i>
+            </div>
+          </div>
+          <div class="icon-circle icon-handshake" style="animation-delay: 3.5s;">
+            <div class="icon-bg">
+              <i class="icon-handshake-svg"></i>
+            </div>
+          </div>
+          
+          <!-- Small decorative dots -->
+          <div class="dot dot-1"></div>
+          <div class="dot dot-2"></div>
+          <div class="dot dot-3"></div>
+          <div class="dot dot-4"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
 </html>
