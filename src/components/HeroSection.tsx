@@ -26,20 +26,12 @@ const HeroSection = () => {
             </p>
           </div>
           
-          <div className="mt-10 flex space-x-4 animate-fade-up opacity-0" style={{ animationDelay: '1s', animationFillMode: 'forwards' }}>
+          <div className="mt-10 animate-fade-up opacity-0" style={{ animationDelay: '1s', animationFillMode: 'forwards' }}>
             <Link 
               to="/register" 
-              state={{ role: 'Founder' }}
               className="px-6 py-3 rounded-md bg-idea text-white font-medium transition-all duration-300 hover:bg-idea-dark hover:shadow-md"
             >
-              For Founders
-            </Link>
-            <Link 
-              to="/register" 
-              state={{ role: 'Investor' }}
-              className="px-6 py-3 rounded-md border border-lightgrey-300 hover:border-idea hover:text-idea transition-all duration-300"
-            >
-              For Investors
+              Get Started
             </Link>
           </div>
         </div>

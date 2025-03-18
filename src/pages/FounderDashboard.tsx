@@ -83,13 +83,13 @@ const FounderDashboard = () => {
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockStartups.map(startup => (
-          <Card key={startup.id} className="bg-gray-800 border-gray-700 hover:border-idea transition-colors">
+          <Card key={startup.id} className="bg-gray-100 border-gray-300 hover:border-idea transition-colors">
             <CardContent className="p-6">
-              <h2 className="text-xl font-bold mb-2">{startup.name}</h2>
-              <p className="text-gray-300 mb-4">{startup.description}</p>
-              <p><strong>Sector:</strong> {startup.sector}</p>
-              <p><strong>Funding Goal:</strong> ${startup.fundingGoal.toLocaleString()}</p>
-              <p className="mb-4"><strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()}</p>
+              <h2 className="text-xl font-bold mb-2 text-gray-800">{startup.name}</h2>
+              <p className="text-gray-600 mb-4">{startup.description}</p>
+              <p className="text-gray-700"><strong>Sector:</strong> {startup.sector}</p>
+              <p className="text-gray-700"><strong>Funding Goal:</strong> ${startup.fundingGoal.toLocaleString()}</p>
+              <p className="mb-4 text-gray-700"><strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()}</p>
               <div className="flex gap-2">
                 <Button 
                   className="bg-idea hover:bg-idea-dark" 
@@ -112,49 +112,49 @@ const FounderDashboard = () => {
 
       {/* Company Listing Dialog */}
       <Dialog open={isCompanyFormOpen} onOpenChange={setIsCompanyFormOpen}>
-        <DialogContent className="bg-gray-800 text-white border-gray-700 sm:max-w-[550px]">
+        <DialogContent className="bg-white text-gray-800 border-gray-300 sm:max-w-[550px]">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">List Your Company</DialogTitle>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmitCompany}>
             <div className="space-y-2">
               <Label htmlFor="company-name">Company Name</Label>
-              <Input id="company-name" className="bg-gray-700 border-gray-600" />
+              <Input id="company-name" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="company-description">Description</Label>
-              <Textarea id="company-description" className="bg-gray-700 border-gray-600" />
+              <Textarea id="company-description" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="company-sector">Sector</Label>
-              <Input id="company-sector" className="bg-gray-700 border-gray-600" />
+              <Input id="company-sector" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="funding-required">Funding Required ($)</Label>
-              <Input id="funding-required" type="number" className="bg-gray-700 border-gray-600" />
+              <Input id="funding-required" type="number" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="founder-details">Founder Details</Label>
-              <Textarea id="founder-details" className="bg-gray-700 border-gray-600" />
+              <Textarea id="founder-details" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="education">Education/Credentials</Label>
-              <Textarea id="education" className="bg-gray-700 border-gray-600" />
+              <Textarea id="education" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="existing-funding">Existing Funding Acquired (if any)</Label>
-              <Input id="existing-funding" type="number" className="bg-gray-700 border-gray-600" />
+              <Input id="existing-funding" type="number" className="bg-gray-50 border-gray-300" />
             </div>
 
             <div className="flex justify-end gap-3">
               <DialogClose asChild>
-                <Button variant="outline" className="border-gray-600">Cancel</Button>
+                <Button variant="outline" className="border-gray-300">Cancel</Button>
               </DialogClose>
               <Button type="submit" className="bg-idea hover:bg-idea-dark">List Company</Button>
             </div>
