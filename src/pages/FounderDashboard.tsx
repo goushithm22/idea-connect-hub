@@ -70,11 +70,11 @@ const FounderDashboard = () => {
   };
 
   return (
-    <div className="bg-blue-50 p-6 rounded-lg">
+    <div className="bg-blue-50 p-6 rounded-lg min-h-screen">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-600">Welcome, {userName}!</h1>
         <Button 
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-idea hover:bg-idea-dark text-white"
           onClick={() => setIsCompanyFormOpen(true)}
         >
           List a Company
@@ -92,7 +92,7 @@ const FounderDashboard = () => {
               <p className="mb-4 text-blue-600"><strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()}</p>
               <div className="flex gap-2">
                 <Button 
-                  className="bg-blue-600 hover:bg-blue-700" 
+                  className="bg-idea hover:bg-idea-dark text-white" 
                   onClick={() => handleShowDetails(startup.id)}
                 >
                   More Details
@@ -156,7 +156,7 @@ const FounderDashboard = () => {
               <DialogClose asChild>
                 <Button variant="outline" className="border-blue-300">Cancel</Button>
               </DialogClose>
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">List Company</Button>
+              <Button type="submit" className="bg-idea hover:bg-idea-dark text-white">List Company</Button>
             </div>
           </form>
         </DialogContent>
