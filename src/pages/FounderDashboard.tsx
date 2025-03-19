@@ -70,9 +70,11 @@ const FounderDashboard = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg min-h-screen">
+    <div className="bg-white p-6 rounded-lg">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-idea">Welcome, {userName}!</h1>
+        <h1 className="text-3xl font-light tracking-tight text-gray-800">
+          Welcome, <span className="font-semibold">{userName}</span>!
+        </h1>
         <Button 
           className="bg-idea hover:bg-idea-dark text-white"
           onClick={() => setIsCompanyFormOpen(true)}
@@ -83,13 +85,27 @@ const FounderDashboard = () => {
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockStartups.map(startup => (
-          <Card key={startup.id} className="bg-white border-gray-200 hover:border-idea transition-colors shadow-sm">
+          <Card key={startup.id} className="bg-white border border-gray-200 hover:border-idea hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
-              <h2 className="text-xl font-bold mb-2 text-idea">{startup.name}</h2>
+              <h2 className="text-xl font-semibold mb-2 text-idea">{startup.name}</h2>
               <p className="text-gray-600 mb-4">{startup.description}</p>
               <p className="text-gray-700"><strong>Sector:</strong> {startup.sector}</p>
               <p className="text-gray-700"><strong>Funding Goal:</strong> ${startup.fundingGoal.toLocaleString()}</p>
-              <p className="mb-4 text-gray-700"><strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()}</p>
+              
+              <div className="mt-3 mb-4 bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div 
+                  className="bg-idea h-full" 
+                  style={{ width: `${(startup.currentFunding / startup.fundingGoal) * 100}%` }}
+                ></div>
+              </div>
+              
+              <p className="mb-4 text-gray-700">
+                <strong>Current Funding:</strong> ${startup.currentFunding.toLocaleString()} 
+                <span className="text-gray-500 text-sm ml-1">
+                  ({Math.round((startup.currentFunding / startup.fundingGoal) * 100)}%)
+                </span>
+              </p>
+              
               <div className="flex gap-2">
                 <Button 
                   className="bg-idea hover:bg-idea-dark text-white" 
@@ -114,45 +130,45 @@ const FounderDashboard = () => {
       <Dialog open={isCompanyFormOpen} onOpenChange={setIsCompanyFormOpen}>
         <DialogContent className="bg-white text-gray-800 border-gray-200 sm:max-w-[550px]">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-idea">List Your Company</DialogTitle>
+            <DialogTitle className="text-xl font-semibold text-idea">List Your Company</DialogTitle>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmitCompany}>
             <div className="space-y-2">
               <Label htmlFor="company-name">Company Name</Label>
-              <Input id="company-name" className="bg-gray-50 border-gray-200" />
+              <Input id="company-name" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="company-description">Description</Label>
-              <Textarea id="company-description" className="bg-gray-50 border-gray-200" />
+              <Textarea id="company-description" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="company-sector">Sector</Label>
-              <Input id="company-sector" className="bg-gray-50 border-gray-200" />
+              <Input id="company-sector" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="funding-required">Funding Required ($)</Label>
-              <Input id="funding-required" type="number" className="bg-gray-50 border-gray-200" />
+              <Input id="funding-required" type="number" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="founder-details">Founder Details</Label>
-              <Textarea id="founder-details" className="bg-gray-50 border-gray-200" />
+              <Textarea id="founder-details" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="education">Education/Credentials</Label>
-              <Textarea id="education" className="bg-gray-50 border-gray-200" />
+              <Textarea id="education" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="existing-funding">Existing Funding Acquired (if any)</Label>
-              <Input id="existing-funding" type="number" className="bg-gray-50 border-gray-200" />
+              <Input id="existing-funding" type="number" className="border-gray-200 focus-visible:ring-idea" />
             </div>
 
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 mt-6">
               <DialogClose asChild>
                 <Button variant="outline" className="border-gray-300">Cancel</Button>
               </DialogClose>

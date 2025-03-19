@@ -22,7 +22,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white text-gray-800">
+    <div className="flex h-screen bg-gray-50 text-gray-800">
       {/* Mobile sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild className="fixed z-50 left-4 top-4 md:hidden">
@@ -32,7 +32,9 @@ const DashboardLayout = () => {
         </SheetTrigger>
         <SheetContent side="left" className="w-[250px] bg-white border-gray-200 p-0">
           <div className="py-6 px-4">
-            <h2 className="text-xl font-bold text-idea mb-6 text-center">ideaSync</h2>
+            <h2 className="text-xl font-light tracking-tight mb-6 text-center">
+              idea<span className="font-semibold">Sync</span>
+            </h2>
             <nav className="space-y-2">
               <Link 
                 to="/dashboard" 
@@ -75,8 +77,10 @@ const DashboardLayout = () => {
       </Sheet>
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:block w-[250px] bg-white border-r border-gray-200 p-6">
-        <h2 className="text-xl font-bold text-idea mb-6 text-center">ideaSync</h2>
+      <aside className="hidden md:block w-[250px] bg-white border-r border-gray-200 p-6 shadow-sm">
+        <h2 className="text-xl font-light tracking-tight mb-8 text-center">
+          idea<span className="font-semibold">Sync</span>
+        </h2>
         <nav className="space-y-2">
           <Link 
             to="/dashboard" 
@@ -111,7 +115,7 @@ const DashboardLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto bg-lightgrey-100 p-6">
+      <main className="flex-1 overflow-auto bg-gray-50 p-6">
         <Outlet />
       </main>
     </div>

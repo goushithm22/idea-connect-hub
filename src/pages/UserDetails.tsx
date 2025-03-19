@@ -30,18 +30,37 @@ const UserDetails = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-blue-600">User Profile</h1>
+      <h1 className="text-3xl font-light tracking-tight text-gray-800">
+        User <span className="font-semibold">Profile</span>
+      </h1>
       
-      <Card className="bg-white border-blue-200 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold text-blue-700">User Details</CardTitle>
+      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="border-b border-gray-100 pb-4">
+          <CardTitle className="text-xl font-semibold text-idea">User Details</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Role:</strong> {user.role}</p>
-          <p><strong>Member Since:</strong> {user.joinDate}</p>
+        <CardContent className="space-y-4 pt-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm text-gray-500">Name</p>
+              <p className="text-gray-800 font-medium">{user.name}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Email</p>
+              <p className="text-gray-800 font-medium">{user.email}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Username</p>
+              <p className="text-gray-800 font-medium">{user.username}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Role</p>
+              <p className="text-gray-800 font-medium">{user.role}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Member Since</p>
+              <p className="text-gray-800 font-medium">{user.joinDate}</p>
+            </div>
+          </div>
           
           <div className="pt-4">
             <Button 
@@ -53,21 +72,25 @@ const UserDetails = () => {
         </CardContent>
       </Card>
       
-      <Card className="bg-white border-blue-200 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold text-blue-700">Listed Companies</CardTitle>
+      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="border-b border-gray-100 pb-4">
+          <CardTitle className="text-xl font-semibold text-idea">Listed Companies</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-5">
           {user.companies.length > 0 ? (
             <ul className="space-y-4">
               {user.companies.map((company, index) => (
-                <li key={index} className="p-4 border border-blue-100 rounded-md">
-                  <h3 className="text-lg font-semibold text-blue-700">{company.name}</h3>
-                  <p className="text-gray-600">{company.description}</p>
-                  <p className="text-blue-600 mt-2">
-                    <strong>Sector:</strong> {company.sector} | 
-                    <strong> Funding Goal:</strong> ${company.fundingGoal.toLocaleString()}
-                  </p>
+                <li key={index} className="p-4 border border-gray-100 rounded-md hover:border-idea hover:shadow-sm transition-all duration-300">
+                  <h3 className="text-lg font-semibold text-idea">{company.name}</h3>
+                  <p className="text-gray-600 my-2">{company.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
+                      {company.sector}
+                    </span>
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
+                      ${company.fundingGoal.toLocaleString()}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>
