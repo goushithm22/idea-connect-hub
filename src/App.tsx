@@ -10,6 +10,7 @@ import SignIn from "./pages/SignIn";
 import Register from "./pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
 import FounderDashboard from "./pages/FounderDashboard";
+import InvestorDashboard from "./pages/InvestorDashboard";
 import UserDetails from "./pages/UserDetails";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<FounderDashboard />} />
+            <Route path="investor" element={<InvestorDashboard />} />
             <Route path="user" element={<UserDetails />} />
           </Route>
           

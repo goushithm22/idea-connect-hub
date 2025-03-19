@@ -9,13 +9,14 @@ import { useToast } from "@/components/ui/use-toast";
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('Founder'); // Default role
   const navigate = useNavigate();
   const { toast } = useToast();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // For now, simulate successful login with any credentials
-    console.log('Login attempt with:', { username, password });
+    console.log('Login attempt with:', { username, password, role });
     
     // Show success toast
     toast({
@@ -24,11 +25,14 @@ const SignIn = () => {
       variant: "default",
     });
     
-    // Navigate to the dashboard after login
-    // Adding a small delay to ensure the toast is visible
+    // Navigate to the appropriate dashboard based on role
     setTimeout(() => {
-      navigate('/dashboard');
-      console.log('Navigating to dashboard...');
+      if (role === 'Investor') {
+        navigate('/dashboard/investor');
+      } else {
+        navigate('/dashboard'); // Default to founder dashboard
+      }
+      console.log(`Navigating to ${role.toLowerCase()} dashboard...`);
     }, 500);
   };
 
@@ -69,6 +73,34 @@ const SignIn = () => {
               required 
               className="border-gray-300"
             />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="role">Sign in as</Label>
+            <div className="flex gap-4">
+              <label className="flex items-center space-x-2">
+                <input 
+                  type="radio" 
+                  name="role" 
+                  value="Founder" 
+                  checked={role === 'Founder'}
+                  onChange={() => setRole('Founder')}
+                  className="h-4 w-4 accent-idea"
+                />
+                <span>Founder</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input 
+                  type="radio" 
+                  name="role" 
+                  value="Investor" 
+                  checked={role === 'Investor'}
+                  onChange={() => setRole('Investor')}
+                  className="h-4 w-4 accent-idea"
+                />
+                <span>Investor</span>
+              </label>
+            </div>
           </div>
           
           <Button 
