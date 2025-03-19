@@ -22,7 +22,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-lightgrey text-gray-800">
+    <div className="flex h-screen bg-white text-gray-800">
       {/* Mobile sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild className="fixed z-50 left-4 top-4 md:hidden">
@@ -49,6 +49,14 @@ const DashboardLayout = () => {
               >
                 <User size={20} />
                 <span>User</span>
+              </Link>
+              <Link 
+                to="/dashboard/investor" 
+                className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                onClick={() => setOpen(false)}
+              >
+                <LineChart size={20} />
+                <span>Investor View</span>
               </Link>
               <Button 
                 variant="ghost" 
@@ -84,6 +92,13 @@ const DashboardLayout = () => {
             <User size={20} />
             <span>User</span>
           </Link>
+          <Link 
+            to="/dashboard/investor" 
+            className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+          >
+            <LineChart size={20} />
+            <span>Investor View</span>
+          </Link>
           <Button 
             variant="ghost" 
             className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
@@ -96,7 +111,7 @@ const DashboardLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto bg-lightgrey p-6">
+      <main className="flex-1 overflow-auto bg-lightgrey-100 p-6">
         <Outlet />
       </main>
     </div>
