@@ -22,23 +22,23 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 text-gray-800">
+    <div className="flex h-screen bg-black text-white">
       {/* Mobile sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild className="fixed z-50 left-4 top-4 md:hidden">
-          <Button variant="outline" size="icon" className="bg-white border-gray-200">
+          <Button variant="outline" size="icon" className="bg-zinc-900 border-zinc-800">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-[250px] bg-white border-gray-200 p-0">
+        <SheetContent side="left" className="w-[250px] bg-zinc-900 border-zinc-800 p-0">
           <div className="py-6 px-4">
-            <h2 className="text-xl font-light tracking-tight mb-6 text-center">
-              idea<span className="font-semibold">Sync</span>
+            <h2 className="text-xl font-bold tracking-tight mb-6 text-center">
+              idea<span className="text-red-500">Sync</span>
             </h2>
             <nav className="space-y-2">
               <Link 
                 to="/dashboard" 
-                className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
                 onClick={() => setOpen(false)}
               >
                 <Home size={20} />
@@ -46,7 +46,7 @@ const DashboardLayout = () => {
               </Link>
               <Link 
                 to="/dashboard/user" 
-                className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
                 onClick={() => setOpen(false)}
               >
                 <User size={20} />
@@ -54,7 +54,7 @@ const DashboardLayout = () => {
               </Link>
               <Link 
                 to="/dashboard/investor" 
-                className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
                 onClick={() => setOpen(false)}
               >
                 <LineChart size={20} />
@@ -62,7 +62,7 @@ const DashboardLayout = () => {
               </Link>
               <Button 
                 variant="ghost" 
-                className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+                className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
                 onClick={() => {
                   setOpen(false);
                   handleLogout();
@@ -77,35 +77,35 @@ const DashboardLayout = () => {
       </Sheet>
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:block w-[250px] bg-white border-r border-gray-200 p-6 shadow-sm">
-        <h2 className="text-xl font-light tracking-tight mb-8 text-center">
-          idea<span className="font-semibold">Sync</span>
+      <aside className="hidden md:block w-[250px] bg-zinc-900 border-r border-zinc-800 p-6">
+        <h2 className="text-xl font-bold tracking-tight mb-8 text-center">
+          idea<span className="text-red-500">Sync</span>
         </h2>
         <nav className="space-y-2">
           <Link 
             to="/dashboard" 
-            className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
           >
             <Home size={20} />
             <span>Home</span>
           </Link>
           <Link 
             to="/dashboard/user" 
-            className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
           >
             <User size={20} />
             <span>User</span>
           </Link>
           <Link 
             to="/dashboard/investor" 
-            className="flex items-center gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
           >
             <LineChart size={20} />
             <span>Investor View</span>
           </Link>
           <Button 
             variant="ghost" 
-            className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-idea hover:text-white transition-colors duration-200"
+            className="w-full flex items-center justify-start gap-2 p-3 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
             onClick={handleLogout}
           >
             <LogOut size={20} />
@@ -115,7 +115,7 @@ const DashboardLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto bg-gray-50 p-6">
+      <main className="flex-1 overflow-auto bg-black p-6">
         <Outlet />
       </main>
     </div>
