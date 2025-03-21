@@ -12,26 +12,53 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Briefcase, TrendingUp } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+// Create schema for form validation
+const registerSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  username: z.string().min(3, { message: "Username must be at least 3 characters." }),
+  role: z.string().min(1, { message: "Please select a role." }),
+  password: z.string()
+    .min(8, { message: "Password must be at least 8 characters." })
+    .regex(/[A-Za-z]/, { message: "Password must contain at least one letter." })
+    .regex(/[0-9]/, { message: "Password must contain at least one number." })
+    .regex(/[^A-Za-z0-9]/, { message: "Password must contain at least one special character." })
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [role, setRole] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   
+  // Initialize form with react-hook-form and zod validation
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      username: "",
+      role: location.state?.role || "",
+      password: ""
+    }
+  });
+
+  // Update role if it's passed via location state
   useEffect(() => {
     if (location.state?.role) {
-      setRole(location.state.role);
+      form.setValue("role", location.state.role);
     }
-  }, [location.state]);
+  }, [location.state, form]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Register attempt with:', { name, email, username, role, password });
+  const onSubmit = (data: RegisterFormValues) => {
+    console.log('Register data:', data);
     
     toast({
       title: "Successfully registered",
@@ -40,9 +67,12 @@ const Register = () => {
     });
     
     setTimeout(() => {
-      navigate('/dashboard');
-      console.log('Navigating to dashboard...');
-    }, 500);
+      if (data.role === 'Investor') {
+        navigate('/dashboard/investor');
+      } else {
+        navigate('/dashboard');
+      }
+    }, 1000);
   };
 
   return (
@@ -57,79 +87,125 @@ const Register = () => {
           <h2 className="text-2xl font-medium mt-6 text-gray-800">Create an account</h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input 
-              id="name"
-              type="text" 
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
-              placeholder="Full Name" 
-              required 
-              className="border-gray-300"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Full Name" 
+                      className="border-gray-300"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input 
-              id="email"
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              placeholder="Email" 
-              required 
-              className="border-gray-300"
+            
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Email" 
+                      type="email"
+                      className="border-gray-300"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
-            <Input 
-              id="username"
-              type="text" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
-              placeholder="Username" 
-              required 
-              className="border-gray-300"
+            
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Username" 
+                      className="border-gray-300"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="role">Role</Label>
-            <Select value={role} onValueChange={setRole} required>
-              <SelectTrigger className="border-gray-300 bg-white">
-                <SelectValue placeholder="Select Role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Founder">Founder</SelectItem>
-                <SelectItem value="Investor">Investor</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input 
-              id="password"
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              placeholder="Password" 
-              required 
-              className="border-gray-300"
+            
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="border-gray-300 bg-white">
+                        <SelectValue placeholder="Select Role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Founder">
+                        <div className="flex items-center">
+                          <Briefcase className="mr-2 h-4 w-4" />
+                          Founder
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="Investor">
+                        <div className="flex items-center">
+                          <TrendingUp className="mr-2 h-4 w-4" />
+                          Investor
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          
-          <Button 
-            type="submit" 
-            className="w-full bg-idea hover:bg-idea-dark text-white font-medium transition-all hover:scale-[1.02] duration-300"
-          >
-            Register
-          </Button>
-        </form>
+            
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Password" 
+                      type="password"
+                      className="border-gray-300"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Must be at least 8 characters with letters, numbers, and special characters.
+                  </p>
+                </FormItem>
+              )}
+            />
+            
+            <Button 
+              type="submit" 
+              className="w-full bg-idea hover:bg-idea-dark text-white font-medium transition-all hover:scale-[1.02] duration-300 mt-4"
+            >
+              Register
+            </Button>
+          </form>
+        </Form>
         
         <div className="text-center mt-6">
           <p className="text-gray-600">
