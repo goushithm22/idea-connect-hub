@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/components/ui/use-toast";
+import { Progress } from '@/components/ui/progress';
 import { 
   Select,
   SelectContent,
@@ -12,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Briefcase, TrendingUp } from 'lucide-react';
+import { Briefcase, TrendingUp, UserPlus, Mail, User, Lock } from 'lucide-react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +38,8 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   
   // Initialize form with react-hook-form and zod validation
   const form = useForm<RegisterFormValues>({
@@ -59,25 +62,36 @@ const Register = () => {
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log('Register data:', data);
+    setIsLoading(true);
     
-    toast({
-      title: "Successfully registered",
-      description: "Your account has been created. You can now log in.",
-      variant: "default",
-    });
-    
-    setTimeout(() => {
-      if (data.role === 'Investor') {
-        navigate('/dashboard/investor');
-      } else {
-        navigate('/dashboard');
+    // Simulate loading progress
+    let currentProgress = 0;
+    const interval = setInterval(() => {
+      currentProgress += 25;
+      setProgress(currentProgress);
+      if (currentProgress >= 100) {
+        clearInterval(interval);
+        
+        toast({
+          title: "Successfully registered",
+          description: "Your account has been created. You can now log in.",
+          variant: "default",
+        });
+        
+        setTimeout(() => {
+          if (data.role === 'Investor') {
+            navigate('/dashboard/investor');
+          } else {
+            navigate('/dashboard');
+          }
+        }, 500);
       }
-    }, 1000);
+    }, 400);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-white to-lightgrey">
-      <div className="bg-lightgrey-100 p-8 rounded-xl shadow-lg w-full max-w-md border border-lightgrey-300">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-lightgrey-200">
         <div className="text-center mb-6">
           <Link to="/" className="inline-block">
             <h1 className="text-3xl font-light tracking-tight">
@@ -85,6 +99,7 @@ const Register = () => {
             </h1>
           </Link>
           <h2 className="text-2xl font-medium mt-6 text-gray-800">Create an account</h2>
+          <p className="text-gray-500 mt-2">Fill in your details to join IdeaSync</p>
         </div>
 
         <Form {...form}>
@@ -96,11 +111,15 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Full Name" 
-                      className="border-gray-300"
-                      {...field} 
-                    />
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Input 
+                        placeholder="Full Name" 
+                        className="border-gray-300 pl-9"
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,12 +133,16 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Email" 
-                      type="email"
-                      className="border-gray-300"
-                      {...field} 
-                    />
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Input 
+                        placeholder="Email" 
+                        type="email"
+                        className="border-gray-300 pl-9"
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,11 +156,15 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Username" 
-                      className="border-gray-300"
-                      {...field} 
-                    />
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Input 
+                        placeholder="Username" 
+                        className="border-gray-300 pl-9"
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,27 +177,36 @@ const Register = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="border-gray-300 bg-white">
-                        <SelectValue placeholder="Select Role" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Founder">
-                        <div className="flex items-center">
-                          <Briefcase className="mr-2 h-4 w-4" />
-                          Founder
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="Investor">
-                        <div className="flex items-center">
-                          <TrendingUp className="mr-2 h-4 w-4" />
-                          Investor
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="grid grid-cols-2 gap-4">
+                    <label className={`flex items-center gap-2 p-2.5 rounded-md border ${field.value === 'Founder' ? 'border-idea bg-blue-50' : 'border-gray-200'} cursor-pointer transition-all`}>
+                      <input 
+                        type="radio" 
+                        value="Founder" 
+                        checked={field.value === 'Founder'}
+                        onChange={() => form.setValue('role', 'Founder')}
+                        className="h-4 w-4 accent-idea"
+                        disabled={isLoading}
+                      />
+                      <div className="flex items-center gap-1.5">
+                        <Briefcase className="h-4 w-4 text-idea" /> 
+                        <span>Founder</span>
+                      </div>
+                    </label>
+                    <label className={`flex items-center gap-2 p-2.5 rounded-md border ${field.value === 'Investor' ? 'border-idea bg-blue-50' : 'border-gray-200'} cursor-pointer transition-all`}>
+                      <input 
+                        type="radio" 
+                        value="Investor" 
+                        checked={field.value === 'Investor'}
+                        onChange={() => form.setValue('role', 'Investor')}
+                        className="h-4 w-4 accent-idea"
+                        disabled={isLoading}
+                      />
+                      <div className="flex items-center gap-1.5">
+                        <TrendingUp className="h-4 w-4 text-idea" />
+                        <span>Investor</span>
+                      </div>
+                    </label>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -183,12 +219,16 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Password" 
-                      type="password"
-                      className="border-gray-300"
-                      {...field} 
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                      <Input 
+                        placeholder="Password" 
+                        type="password"
+                        className="border-gray-300 pl-9"
+                        {...field}
+                        disabled={isLoading}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                   <p className="text-xs text-gray-500 mt-1">
@@ -198,11 +238,23 @@ const Register = () => {
               )}
             />
             
+            {isLoading && (
+              <div className="py-2">
+                <Progress value={progress} indicatorClassName="bg-idea" />
+              </div>
+            )}
+            
             <Button 
               type="submit" 
               className="w-full bg-idea hover:bg-idea-dark text-white font-medium transition-all hover:scale-[1.02] duration-300 mt-4"
+              disabled={isLoading}
             >
-              Register
+              {isLoading ? 'Creating account...' : (
+                <>
+                  <UserPlus className="h-4 w-4" />
+                  Register
+                </>
+              )}
             </Button>
           </form>
         </Form>
@@ -210,7 +262,7 @@ const Register = () => {
         <div className="text-center mt-6">
           <p className="text-gray-600">
             Already have an account?{' '}
-            <Link to="/signin" className="font-medium text-gray-800 hover:text-idea transition-colors">
+            <Link to="/signin" className="font-medium text-idea hover:text-idea-dark transition-colors">
               Sign in
             </Link>
           </p>
