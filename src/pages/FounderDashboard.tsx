@@ -65,12 +65,36 @@ const FounderDashboard = () => {
 
   const activeStartup = mockStartups.find(s => s.id === activeStartupId) || mockStartups[0];
 
-  // Stats data
+  // Stats data with growth indicators
   const statsData = [
-    { title: "Active Listings", value: "3", icon: <Briefcase className="w-5 h-5 text-blue-600" /> },
-    { title: "Total Funding", value: "$875K", icon: <LineChart className="w-5 h-5 text-green-600" /> },
-    { title: "Investor Connects", value: "129", icon: <Users className="w-5 h-5 text-purple-600" /> },
-    { title: "Growth Rate", value: "+28%", icon: <TrendingUp className="w-5 h-5 text-orange-600" /> }
+    { 
+      title: "Active Listings", 
+      value: "3", 
+      icon: <Briefcase className="w-5 h-5 text-blue-600" />,
+      change: "+1 this month",
+      changeType: "positive"
+    },
+    { 
+      title: "Total Funding", 
+      value: "$875K", 
+      icon: <LineChart className="w-5 h-5 text-green-600" />,
+      change: "+$125K",
+      changeType: "positive"
+    },
+    { 
+      title: "Investor Connects", 
+      value: "129", 
+      icon: <Users className="w-5 h-5 text-purple-600" />,
+      change: "+28%",
+      changeType: "positive"
+    },
+    { 
+      title: "Growth Rate", 
+      value: "28%", 
+      icon: <TrendingUp className="w-5 h-5 text-orange-600" />,
+      change: "vs last quarter",
+      changeType: "neutral"
+    }
   ];
 
   // Recent activities
@@ -99,7 +123,7 @@ const FounderDashboard = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-gray-50">
       {/* Header with welcome message and buttons */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -137,7 +161,8 @@ const FounderDashboard = () => {
           <StartupSelector 
             startups={mockStartups} 
             activeStartupId={activeStartupId} 
-            onStartupSelect={setActiveStartupId} 
+            onStartupSelect={setActiveStartupId}
+            onAddCompany={() => setIsCompanyFormOpen(true)}
           />
           
           <ActivityFeed activities={recentActivities} />
@@ -147,11 +172,17 @@ const FounderDashboard = () => {
         <div className="lg:col-span-2 space-y-6">
           <StartupDetails startup={activeStartup} />
           
-          <Tabs defaultValue="insights">
-            <TabsList className="grid grid-cols-3 mb-4">
-              <TabsTrigger value="insights">Insights</TabsTrigger>
-              <TabsTrigger value="meetings">Meetings</TabsTrigger>
-              <TabsTrigger value="investors">Potential Investors</TabsTrigger>
+          <Tabs defaultValue="insights" className="w-full">
+            <TabsList className="grid grid-cols-3 mb-4 bg-gray-100">
+              <TabsTrigger value="insights" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
+                Insights
+              </TabsTrigger>
+              <TabsTrigger value="meetings" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
+                Meetings
+              </TabsTrigger>
+              <TabsTrigger value="investors" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
+                Potential Investors
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="insights">

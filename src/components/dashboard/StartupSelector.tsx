@@ -2,6 +2,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { Plus } from 'lucide-react';
 
 interface Startup {
   id: number;
@@ -21,9 +23,10 @@ interface StartupSelectorProps {
   startups: Startup[];
   activeStartupId: number;
   onStartupSelect: (id: number) => void;
+  onAddCompany: () => void;
 }
 
-const StartupSelector = ({ startups, activeStartupId, onStartupSelect }: StartupSelectorProps) => {
+const StartupSelector = ({ startups, activeStartupId, onStartupSelect, onAddCompany }: StartupSelectorProps) => {
   const getProgressColor = (percentage: number) => {
     if (percentage < 30) return "bg-red-500";
     if (percentage < 70) return "bg-yellow-500";
@@ -31,9 +34,20 @@ const StartupSelector = ({ startups, activeStartupId, onStartupSelect }: Startup
   };
 
   return (
-    <Card className="bg-white border-gray-200">
+    <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl text-gray-900">My Startups</CardTitle>
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-xl text-gray-900">My Startups</CardTitle>
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="border-blue-200 text-blue-600 hover:bg-blue-50"
+            onClick={onAddCompany}
+          >
+            <Plus className="h-4 w-4 mr-1" />
+            Add New
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="p-4 space-y-3">
         {startups.map(startup => (

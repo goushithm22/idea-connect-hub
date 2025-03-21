@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gauge, TrendingUp, Activity, Target } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Gauge, TrendingUp, Activity, Target, ArrowRight } from 'lucide-react';
 
 const InsightsTab = () => {
   return (
     <div className="space-y-4">
-      <Card className="bg-white border-gray-200">
+      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg text-gray-900">Performance Metrics</CardTitle>
         </CardHeader>
@@ -52,9 +53,14 @@ const InsightsTab = () => {
         </CardContent>
       </Card>
       
-      <Card className="bg-white border-gray-200">
+      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg text-gray-900">Investor Match Recommendations</CardTitle>
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-lg text-gray-900">Investor Match Recommendations</CardTitle>
+            <Button variant="ghost" size="sm" className="text-blue-600 hover:bg-blue-50">
+              View All <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="p-4">
           <div className="space-y-3">

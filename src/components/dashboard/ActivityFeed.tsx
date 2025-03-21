@@ -10,13 +10,14 @@ interface ActivityItem {
 
 interface ActivityFeedProps {
   activities: ActivityItem[];
+  title?: string;
 }
 
-const ActivityFeed = ({ activities }: ActivityFeedProps) => {
+const ActivityFeed = ({ activities, title = "Activity Feed" }: ActivityFeedProps) => {
   return (
-    <Card className="bg-white border-gray-200">
+    <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl text-gray-900">Activity Feed</CardTitle>
+        <CardTitle className="text-xl text-gray-900">{title}</CardTitle>
       </CardHeader>
       <CardContent className="p-4">
         <div className="space-y-4">
