@@ -65,7 +65,7 @@ const FounderDashboard = () => {
 
   const activeStartup = mockStartups.find(s => s.id === activeStartupId) || mockStartups[0];
 
-  // Stats data with growth indicators - Fixed the changeType to use the specific literals
+  // Stats data with growth indicators
   const statsData = [
     { 
       title: "Active Listings", 
@@ -128,21 +128,21 @@ const FounderDashboard = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
-            Welcome, <span className="text-blue-600">Founder</span>!
+            Welcome, <span className="text-red-600">Founder</span>!
           </h1>
           <p className="text-gray-600 mt-1">Manage your startups and connect with investors</p>
         </div>
         <div className="flex gap-3">
           <Button 
             variant="outline" 
-            className="flex items-center gap-2 border-blue-200 text-blue-600 hover:bg-blue-50"
+            className="flex items-center gap-2 border-red-200 text-red-600 hover:bg-red-50"
           >
             <Bell className="h-4 w-4" />
             <span className="hidden sm:inline">Notifications</span>
             <span className="inline-block bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
           </Button>
           <Button 
-            className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
+            className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-2"
             onClick={() => setIsCompanyFormOpen(true)}
           >
             <Briefcase className="h-4 w-4" />
@@ -151,61 +151,43 @@ const FounderDashboard = () => {
         </div>
       </div>
       
-      {/* Stats Overview */}
-      <StatsOverview statsData={statsData} />
-      
-      {/* Main content with startup selection and details */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left column - Startup Selector and Activity Feed */}
-        <div className="lg:col-span-1 space-y-6">
-          <StartupSelector 
-            startups={mockStartups} 
-            activeStartupId={activeStartupId} 
-            onStartupSelect={setActiveStartupId}
-            onAddCompany={() => setIsCompanyFormOpen(true)}
-          />
-          
-          <ActivityFeed activities={recentActivities} />
-        </div>
-        
-        {/* Right columns - Active Startup Details */}
-        <div className="lg:col-span-2 space-y-6">
-          <StartupDetails startup={activeStartup} />
-          
-          <Tabs defaultValue="insights" className="w-full">
-            <TabsList className="grid grid-cols-3 mb-4 bg-gray-100">
-              <TabsTrigger value="insights" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
-                Insights
-              </TabsTrigger>
-              <TabsTrigger value="meetings" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
-                Meetings
-              </TabsTrigger>
-              <TabsTrigger value="investors" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
-                Potential Investors
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="insights">
-              <InsightsTab />
-            </TabsContent>
-            
-            <TabsContent value="meetings">
-              <MeetingsTab meetings={upcomingMeetings} />
-            </TabsContent>
-            
-            <TabsContent value="investors">
-              <InvestorsTab />
-            </TabsContent>
-          </Tabs>
-        </div>
+      {/* Main content with startup cards in grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {mockStartups.map(startup => (
+          <Card key={startup.id} className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
+            <CardContent className="p-6 space-y-4">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">{startup.name}</h3>
+                <p className="text-gray-600">{startup.description}</p>
+              </div>
+              
+              <div>
+                <div className="flex flex-col space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Sector:</span>
+                    <span className="text-sm font-medium">{startup.sector}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Funding Goal:</span>
+                    <span className="text-sm font-medium">${startup.fundingGoal.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Current Funding:</span>
+                    <span className="text-sm font-medium text-green-600">${startup.currentFunding.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <Button 
+                variant="outline"
+                className="w-full border-red-200 text-red-600 hover:bg-red-50"
+              >
+                More Details
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-      
-      {/* Company Listing Dialog */}
-      <CompanyForm 
-        open={isCompanyFormOpen} 
-        onOpenChange={setIsCompanyFormOpen} 
-        onSubmit={handleCompanySubmit} 
-      />
     </div>
   );
 };
