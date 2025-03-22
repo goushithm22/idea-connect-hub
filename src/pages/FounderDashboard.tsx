@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { Bell, Briefcase, Calendar, LineChart, Mail, Target, TrendingUp, Users } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
 
 // Import dashboard components
 import StatsOverview from '@/components/dashboard/StatsOverview';
