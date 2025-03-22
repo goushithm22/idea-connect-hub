@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Briefcase, LineChart, Users, TrendingUp } from 'lucide-react';
 
 interface StatCardProps {
   title: string;
