@@ -65,35 +65,35 @@ const FounderDashboard = () => {
 
   const activeStartup = mockStartups.find(s => s.id === activeStartupId) || mockStartups[0];
 
-  // Stats data with growth indicators
+  // Stats data with growth indicators - Fixed the changeType to use the specific literals
   const statsData = [
     { 
       title: "Active Listings", 
       value: "3", 
       icon: <Briefcase className="w-5 h-5 text-blue-600" />,
       change: "+1 this month",
-      changeType: "positive"
+      changeType: "positive" as const
     },
     { 
       title: "Total Funding", 
       value: "$875K", 
       icon: <LineChart className="w-5 h-5 text-green-600" />,
       change: "+$125K",
-      changeType: "positive"
+      changeType: "positive" as const
     },
     { 
       title: "Investor Connects", 
       value: "129", 
       icon: <Users className="w-5 h-5 text-purple-600" />,
       change: "+28%",
-      changeType: "positive"
+      changeType: "positive" as const
     },
     { 
       title: "Growth Rate", 
       value: "28%", 
       icon: <TrendingUp className="w-5 h-5 text-orange-600" />,
       change: "vs last quarter",
-      changeType: "neutral"
+      changeType: "neutral" as const
     }
   ];
 
